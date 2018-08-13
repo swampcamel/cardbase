@@ -1,15 +1,16 @@
 $(function (){
-
-  var suit = ["&spades;", "&clubs;", "&diams;", "&hearts;"];
-  var num = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"];
+//declare global variables
+  var suits = ["&spades;", "&clubs;", "&diams;", "&hearts;"];
+  var nums = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"];
   var deck = [];
   var deck1 = [];
   var deck2 = [];
   var graveyard2 = [];
   var graveyard1 = [];
-
+//shuffle
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
+    console.log(temporaryValue);
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
@@ -26,42 +27,58 @@ $(function (){
 
     return array;
   }
-
-  suit.forEach(function(suit){
-  	num.forEach(function(num){
-    	deck.push(num + " of " + suit);
+//make deck
+  suits.forEach(function(suit){
+    var counter = 2;
+  	nums.forEach(function(num) {
+    	deck.push({
+        card: num + " of " + suit,
+        value: counter
+      });
+      counter ++;
     });
   });
 
-  $("#shuffle").click(function() {
+  console.log(deck);
+//call shuffle function
+  $("#start").click(function() {
     shuffle(deck);
-    console.log(deck);
-  });
-
-  $("#cut").click(function() {
     deck1 = deck.slice();
     deck2 = deck1.splice(0, Math.ceil(deck1.length / 2));
-    console.log(deck1);
-    console.log(deck2);
-  });
 
-  $("#draw1").click(function() {
-    var drawn = deck1.pop();
-    graveyard1.push(drawn);
-    $("#card1").html(drawn);
-    console.log(deck1);
-    console.log(graveyard1);
-    $("#discard1").append("<li>" + drawn + "</li>");
+});
 
-  });
+//deck one
+  $("#draw").click(function() {
+    var userDraw = deck1.pop();
+    var compDraw = deck2.pop();
 
-  $("#draw2").click(function() {
-    var drawn = deck2.pop();
-    graveyard2.push(drawn);
-    $("#card2").html(drawn);
-    console.log(deck2);
-    console.log(graveyard2);
-    $("#discard2").append("<li>" + drawn + "</li>");
+    if (compDraw.value > userDraw.value) {
+      console.log("lose");
+      graveyard2.push(userDraw);
+      graveyard2.push(compDraw);
+      console.log(graveyard2);
+    } else if ( userDraw.value > compDraw.value ) {
+      graveyard1.push(userDraw);
+      graveyard1.push(compDraw);
+      console.log(graveyard1);
+      console.log("win");
+    } else {
+      console.log("tie");
+    }
+
+
+
+    $("#card1").html(userDraw.card);
+    $("#card2").html(compDraw.card);
+    // $("#discard1").append("<li>" + userDraw.card + "</li>");
   });
+// deck two
+  // $("#draw2").click(function() {
+  //   var drawn = deck2.pop();
+  //   graveyard2.push(drawn);
+  //   $("#card2").html(drawn);
+  //   $("#discard2").append("<li>" + drawn + "</li>");
+  //  });
 
 });
