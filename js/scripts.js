@@ -10,7 +10,6 @@ $(function (){
 //shuffle
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-    console.log(temporaryValue);
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
@@ -39,7 +38,6 @@ $(function (){
     });
   });
 
-  console.log(deck);
 //call shuffle function
   $("#start").click(function() {
     shuffle(deck);
@@ -48,8 +46,22 @@ $(function (){
 
 });
 
+
+
 //deck one
   $("#draw").click(function() {
+
+    if (deck1 === undefined || deck1.length == 0) {
+      deck1 = graveyard1.slice();
+      graveyard1 = [];
+      shuffle(deck1);
+    }
+    if (deck2 === undefined || deck2.length == 0) {
+      deck2 = graveyard2.slice();
+      graveyard2 = [];
+      shuffle(deck2);
+    }
+
     var userDraw = deck1.pop();
     var compDraw = deck2.pop();
 
@@ -57,28 +69,21 @@ $(function (){
       console.log("lose");
       graveyard2.push(userDraw);
       graveyard2.push(compDraw);
-      console.log(graveyard2);
+
     } else if ( userDraw.value > compDraw.value ) {
       graveyard1.push(userDraw);
       graveyard1.push(compDraw);
-      console.log(graveyard1);
+
       console.log("win");
     } else {
       console.log("tie");
     }
-
-
-
+    
     $("#card1").html(userDraw.card);
     $("#card2").html(compDraw.card);
-    // $("#discard1").append("<li>" + userDraw.card + "</li>");
+    console.log(deck1);
+    console.log(deck2);
+    console.log(graveyard1);
+    console.log(graveyard2);
   });
-// deck two
-  // $("#draw2").click(function() {
-  //   var drawn = deck2.pop();
-  //   graveyard2.push(drawn);
-  //   $("#card2").html(drawn);
-  //   $("#discard2").append("<li>" + drawn + "</li>");
-  //  });
-
 });
