@@ -78,7 +78,7 @@ $(function (){
     } else {
       console.log("tie");
     }
-    
+
     $("#card1").html(userDraw.card);
     $("#card2").html(compDraw.card);
     console.log(deck1);
