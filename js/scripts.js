@@ -92,10 +92,10 @@ $(function (){
         for ( var draw = 0; draw < 4; draw++ ) {
             userPot.push(deck1.pop());
             console.log(userPot);
-            $("#player-pile").append("<li>" + userPot[draw].card + "</li>");
+            $("#player-pile").append('<li class="list-group-item">' + userPot[draw].card + '</li>');
             compPot.push(deck2.pop());
             console.log(compPot);
-            $("#comp-pile").append("<li>" + compPot[draw].card + "</li>");
+            $("#comp-pile").append('<li class="list-group-item">' + compPot[draw].card + '</li>');
         }
 
         if ( userPot[userPot.length - 1].value > compPot[compPot.length - 1].value ) {
