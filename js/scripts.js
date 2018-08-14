@@ -50,6 +50,10 @@ $(function (){
 
 //deck one
   $("#draw").click(function() {
+//added this line to clear warzone after a war and player has drawn new card
+    $("#player-pile").empty();
+    $("#comp-pile").empty();
+
 
     if (deck1 === undefined || deck1.length == 0) {
       deck1 = graveyard1.slice();
@@ -67,17 +71,60 @@ $(function (){
 
     if (compDraw.value > userDraw.value) {
       console.log("lose");
+      $("#winner").html("Computer wins with " + compDraw.card + ".");
       graveyard2.push(userDraw);
       graveyard2.push(compDraw);
 
     } else if ( userDraw.value > compDraw.value ) {
+      $("#winner").html("Player 1 wins with " + userDraw.card + ".");
       graveyard1.push(userDraw);
       graveyard1.push(compDraw);
 
       console.log("win");
     } else {
       console.log("tie");
-    }
+// tie loop
+
+      var userPot = [];
+      var compPot = [];
+
+      // function tiebreaker ( userPot, compPot ) {
+        for ( var draw = 0; draw < 4; draw++ ) {
+            userPot.push(deck1.pop());
+            console.log(userPot);
+            $("#player-pile").append("<li>" + userPot[draw].card + "</li>");
+            compPot.push(deck2.pop());
+            console.log(compPot);
+            $("#comp-pile").append("<li>" + compPot[draw].card + "</li>");
+        }
+
+        if ( userPot[userPot.length - 1].value > compPot[compPot.length - 1].value ) {
+          var highCard = userPot[3].card;
+          $("#winner").html("Computer wins with " + highCard + ".");
+          userPot.forEach(function(card) {
+            var pusher = userPot.pop();
+            graveyard1.push(pusher);
+          });
+          compPot.forEach(function(card) {
+            var pusher = compPot.pop();
+            graveyard1.push(pusher);
+          });
+
+        } else if ( compPot[userPot.length - 1].value > userPot[compPot.length - 1].value ) {
+          var highCard = compPot[3].card;
+          $("#winner").html("Computer wins with " + highCard + ".");
+          userPot.forEach(function(card) {
+            graveyard2.push(userPot.pop());
+          });
+          compPot.forEach(function(card) {
+            graveyard2.push(compPot.pop());
+          });
+        } else {
+
+          }
+
+    // }
+  }
 
     $("#card1").html(userDraw.card);
     $("#card2").html(compDraw.card);
