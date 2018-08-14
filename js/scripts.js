@@ -120,7 +120,7 @@ $(function (){
             graveyard2.push(compPot.pop());
           });
         } else {
-
+// aaaaand recursive function?
           }
 
     // }
