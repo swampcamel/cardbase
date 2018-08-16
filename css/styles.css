@@ -5,3 +5,7 @@
 .row {
   margin-top: 50px;
 }
+
+#draw {
+  display: none;
+}
